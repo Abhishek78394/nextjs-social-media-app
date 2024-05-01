@@ -49,6 +49,11 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  privacy: {
+    type: String,
+    enum: ['public', 'private'],
+    default: 'private'
+  },
   created_at: {
     type: Date,
     default: Date.now
@@ -58,6 +63,8 @@ const userSchema = new mongoose.Schema({
     default: Date.now
   }
 });
+
+
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;

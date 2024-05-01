@@ -14,21 +14,21 @@ app.prepare().then(() => {
   createServer(async (req, res) => {
     try {
       
-      const io = new Server(httpServer);
+      // const io = new Server(httpServer);
 
-      io.on("connection", (socket) => {
-        io.on('connection', (socket) => {
-          console.log('A user connected!');
+      // io.on("connection", (socket) => {
+      //   io.on('connection', (socket) => {
+      //     console.log('A user connected!');
       
-          socket.on('chat message', (msg) => {
-              io.emit('chat message', msg); 
-          });
+      //     socket.on('chat message', (msg) => {
+      //         io.emit('chat message', msg); 
+      //     });
       
-          socket.on('disconnect', () => {
-              console.log('A user disconnected!');
-          });
-      });
-      });
+      //     socket.on('disconnect', () => {
+      //         console.log('A user disconnected!');
+      //     });
+      // });
+      // });
 
       const parsedUrl = parse(req.url, true)
       const { pathname, query } = parsedUrl

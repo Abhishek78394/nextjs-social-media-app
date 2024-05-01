@@ -6,8 +6,7 @@ const otpSchema = new mongoose.Schema({
     ref: 'User'
   },
   otp_number: {
-    type: Number,
-    ref: 'User'
+    type: Number
   },
   otp_expiry: Date,
   email: {
@@ -22,7 +21,7 @@ const otpSchema = new mongoose.Schema({
   },
   otp_type: {
     type: String,
-    enum: ['FORGETPASSWORD', 'VERIFYEMAIL','TWOSTEPVERIFYCATION']
+    enum: ['FORGETPASSWORD', 'TWOSTEPVERIFYCATION']
   },
   created_at: {
     type: Date,

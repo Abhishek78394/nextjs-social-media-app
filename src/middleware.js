@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 
 
 export async function middleware(NextRequest) {
+
   const url = NextRequest.nextUrl;
   const isLoginSignup = url.pathname.includes("/login") || url.pathname.includes("/sign-up");
 

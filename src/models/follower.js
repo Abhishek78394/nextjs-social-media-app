@@ -9,6 +9,12 @@ const followerSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
+  status: {
+    type: String,
+    enum: ['pending', 'accepted', 'rejected'],
+    required: true,
+    default: 'pending'
+  },
   created_at: {
     type: Date,
     default: Date.now
