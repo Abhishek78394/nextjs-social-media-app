@@ -1,9 +1,8 @@
 import AuthService from "@/services/authService";
+import Helper from "@/services/helper";
 import { connect } from "@/dbConfig/dbConfig";
 import { NextResponse } from "next/server";
-import Post from "@/models/post"; // Replace with your Post model
-import User from "@/models/user";
-import Follower from "@/models/follower";
+import Post from "@/models/post"; 
 
 connect();
 
@@ -23,7 +22,7 @@ export async function GET(req) {
 
     const filter = { $or: [{ privacy: "public" }] };
     
-    const followingList = await Follower.find({ follower_id: user._id, status: 'accepted' });
+    const followingList = await Helper.getFollowing(user._id);
     const followingIds = followingList.map(item => item.following_id);
     filter.$or.push({ user_id: { $in: followingIds } });
 

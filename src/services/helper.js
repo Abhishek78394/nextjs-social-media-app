@@ -1,3 +1,4 @@
+import Follower from "@/models/follower";
 import { writeFile } from "fs/promises";
 
 const Helper = {
@@ -38,6 +39,41 @@ const Helper = {
       return false;
     }
   },
+  getFollowing: async (userId) => {
+    try {
+      const followingList = await Follower.find({
+        follower_id: userId,
+        status: "accepted",
+      }).populate("following_id", "-password");
+
+      return followingList;
+    } catch (error) {
+      console.error("Error:", error);
+      throw new Error("Internal server error");
+    }
+  },
+  getFollower: async (userId) => {
+    try {
+      const followerList = await Follower.find({
+        following_id: userId,
+        status: "accepted",
+        }).populate("follower_id", "-password");
+
+      return followerList;
+    } catch (error) {
+      console.error("Error:", error);
+      throw new Error("Internal server error");
+    }
+  },
+  isFollowing: async (userId, followingId) =>{
+    const following = await Follower.findOne({
+      follower_id: userId,
+      following_id: followingId,
+      status: "accepted"
+    });
+    return !!following;
+  },
+ 
 };
 
 module.exports = Helper;

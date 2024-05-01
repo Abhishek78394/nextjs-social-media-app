@@ -1,7 +1,7 @@
 import AuthService from "@/services/authService";
+import Helper from "@/services/helper";
 import { connect } from "@/dbConfig/dbConfig";
 import { NextResponse } from "next/server";
-import Follower from "@/models/follower";
 
 connect();
 
@@ -12,10 +12,7 @@ export async function GET(req) {
       return NextResponse.json({ error: authError.message }, { status: 401 });
     }
 
-    const followingList = await Follower.find({
-      follower_id: user._id,
-      status: "accepted",
-    }).populate("following_id", "-password");
+    const followingList = await Helper.getFollowing(user._id);
 
     return NextResponse.json(
       { message: "Following list retrieved successfully", data: followingList },

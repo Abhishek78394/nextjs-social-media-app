@@ -27,7 +27,7 @@ export async function POST(req) {
       follower_id: user._id,
       following_id: value.followeeId,
     });
-// console.log(existingRequest)
+
     if (existingRequest && existingRequest.status === "pending") {
       return NextResponse.json(
         { error: "Following request already pending" },

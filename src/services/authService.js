@@ -31,7 +31,7 @@ const AuthService = {
       });
       return { user: decodedToken.protectedHeader.payload }; 
     } catch (error) {
-      console.log("error:",error);
+      console.error("error:",error);
       if (error.message === '"exp" claim timestamp check failed') {
         return { error: "Token expired. Please login again.", status: 401 };
       } else {
