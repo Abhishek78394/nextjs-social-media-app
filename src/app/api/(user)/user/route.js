@@ -17,7 +17,7 @@ export async function GET(req) {
     const searchParams = new URLSearchParams(url.searchParams);
 
     const page = parseInt(searchParams.get('page')) || 1;
-    const limit = parseInt(searchParams.get('limit')) || 5;
+    const limit = parseInt(searchParams.get('limit')) || 15;
 
     if (isNaN(page) || isNaN(limit) || page < 1 || limit < 1) {
       return NextResponse.json({ error: "Invalid page or limit parameters" }, { status: 400 });

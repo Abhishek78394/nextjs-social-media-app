@@ -10,6 +10,15 @@
     "serve": "node server"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@fortawesome/fontawesome-free": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/icons-material": "^5.15.16",
+    "@mui/material": "^5.15.16",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@reduxjs/toolkit": "^2.2.3",
+    "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "email-templates": "^11.1.1",
     "joi": "^17.13.0",
@@ -20,7 +29,10 @@
     "nodemailer": "^6.9.13",
     "react": "^18",
     "react-dom": "^18",
-    "socket.io": "^4.7.5"
+    "react-redux": "^9.1.2",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
+    "styled-components": "^6.1.9"
   },
   "devDependencies": {
     "eslint": "^8",
