@@ -1,3 +1,6 @@
+import { logOutUser } from "@/store/actions/authAction";
+import { LogOutApi } from "@/store/api/authApi";
+import { receivedError, requestSent, responseReceived } from "@/store/utilsActions";
 import { Mail, Notifications, Pets } from "@mui/icons-material";
 import {
   AppBar,
@@ -11,7 +14,9 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -43,12 +48,31 @@ const UserBox = styled(Box)(({ theme }) => ({
   },
 }));
 const Navbar = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+
+  const logoutHandler = async () => {
+    try {
+      dispatch(requestSent());
+
+      const response = await LogOutApi();
+      dispatch(logOutUser(response));
+
+      dispatch(responseReceived());
+
+      router.push("/login");
+    } catch (error) {
+      console.error("Login Page error::", error);
+      dispatch(receivedError(error));
+      dispatch(responseReceived());
+    }
+  }
   return (
     <AppBar position="sticky">
       <StyledToolbar>
         <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
-          LAMA DEV
+        Social Media  
         </Typography>
         <Pets sx={{ display: { xs: "block", sm: "none" } }} />
      
@@ -87,9 +111,9 @@ const Navbar = () => {
           horizontal: "right",
         }}
       >
-        <MenuItem>Profile</MenuItem>
-        <MenuItem>My account</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={()=>router.push('/profile')}>Profile</MenuItem>
+        {/* <MenuItem>My account</MenuItem> */}
+        <MenuItem onClick={logoutHandler}>Logout</MenuItem>
       </Menu>
     </AppBar>
   );

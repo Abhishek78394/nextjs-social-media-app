@@ -9,7 +9,7 @@ export const requestSent = () => {
       };
   };
 
-  export const responseRecived = () => {
+  export const responseReceived = () => {
     return {
         type: actionType.UTILS.RESPONSE_RECEVIED
       };

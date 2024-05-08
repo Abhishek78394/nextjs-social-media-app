@@ -42,7 +42,7 @@ import {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#simple-list">
+              <ListItemButton component="a" href="/setting">
                 <ListItemIcon>
                   <Settings />
                 </ListItemIcon>
@@ -50,7 +50,7 @@ import {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#simple-list">
+              <ListItemButton component="a" href="/profile">
                 <ListItemIcon>
                   <AccountBox />
                 </ListItemIcon>

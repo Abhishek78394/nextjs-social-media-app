@@ -15,7 +15,7 @@ import { RegisterApi } from "@/store/api/authApi";
 import { RegisterUser } from "@/store/actions/authAction";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { receivedError, requestSent, responseRecived } from "@/store/utilsActions";
+import { receivedError, requestSent, responseReceived } from "@/store/utilsActions";
 import { Alert } from "@mui/material";
 
 const defaultTheme = createTheme();
@@ -39,14 +39,14 @@ const Page = () => {
       const response = await RegisterApi(userDetails);
       dispatch(RegisterUser(response));
 
-      dispatch(responseRecived());
+      dispatch(responseReceived());
 
       router.push("/");
     } catch (error) {
       console.log("Login Page error::", error);
       setError(error.data.error);
       dispatch(receivedError(error));
-      dispatch(responseRecived());
+      dispatch(responseReceived());
     }
   };
 

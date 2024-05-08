@@ -18,7 +18,7 @@ import { logInApi } from "@/store/api/authApi";
 import {
   receivedError,
   requestSent,
-  responseRecived,
+  responseReceived,
 } from "@/store/utilsActions";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -33,7 +33,6 @@ const Page = () => {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      console.log("object created")
       const data = new FormData(event.currentTarget);
       const userDetails = {
         identifier: data.get("identifier"),
@@ -44,14 +43,14 @@ const Page = () => {
       const response = await logInApi(userDetails);
       dispatch(loginUser(response));
 
-      dispatch(responseRecived());
+      dispatch(responseReceived());
 
       router.push("/");
     } catch (error) {
-      console.log("Login Page error::", error);
+      console.error("Login Page error::", error);
       setError(error.data.error);
       dispatch(receivedError(error));
-      dispatch(responseRecived());
+      dispatch(responseReceived());
     }
   };
 

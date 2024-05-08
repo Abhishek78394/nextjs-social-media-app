@@ -23,11 +23,10 @@ export const actionType = {
       REQUEST_ERROR: 'REQUEST_ERROR',
       EMPTY_ERRORS: " EMPTY_ERRORS"
    },
-
+ 
    USER_TOKEN: "USER_TOKEN",
 
    LOG_OUT: "LOG_OUT",
 
 
-   URLS : "URLS"
 }

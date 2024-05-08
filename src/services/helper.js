@@ -1,5 +1,6 @@
 import Follower from "@/models/follower";
 import { writeFile } from "fs/promises";
+import { cookies } from "next/headers";
 
 const Helper = {
   makeRandomNumber: (numDigits) => {
@@ -73,6 +74,18 @@ const Helper = {
     });
     return !!following;
   },
+  setCookie: (key, value) => {
+    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+    const expires = new Date(Date.now() + oneDayInMilliseconds);
+  
+    cookies().set(key, value, {
+      expires,
+      path: '/',
+      domain: process.env.NEXT_PUBLIC_DOMAIN || 'localhost',
+      secure: process.env.NODE_ENV === 'production', 
+      httpOnly: true, 
+    });
+  }
  
 };
 

@@ -2,7 +2,7 @@ import bcryptUtils from "@/services/hashService";
 import AuthService from "@/services/authService";
 import { connect } from "@/dbConfig/dbConfig";
 import { NextResponse } from "next/server";
-import { cookies } from 'next/headers';
+import Helper from "@/services/helper";
 import User from "@/models/user";
 import Joi from "joi";
 
@@ -43,8 +43,8 @@ export async function POST(req) {
     user.reset_token = token;
     await user.save();
     delete user._doc.password;
-    cookies().set('token', token);
-
+    // cookies().set('token', token);
+    Helper.setCookie('token', token);
     return NextResponse.json(
       { message: "User login successfully", data: user },
       { status: 200 }

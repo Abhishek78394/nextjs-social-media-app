@@ -19,12 +19,17 @@ function userReducer(state = initialState, action) {
         user: action.payload,
         userToken: action.payload?.reset_token,
       };
-    case actionType.LOG_OUT:
+    case actionType.EXISTING_USER.SUCCESS:
       return {
         ...state,
         user: null,
       };
-
+      case actionType.UTILS.RESPONSE_RECEVIED:
+        return {
+          ...state,
+          user: action.payload,
+        };
+  
     default:
       return state;
   }

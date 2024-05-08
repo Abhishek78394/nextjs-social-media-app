@@ -7,7 +7,6 @@ export async function middleware(NextRequest) {
     url.pathname.includes("/login") || url.pathname.includes("/sign-up");
   const isApi = url.pathname.includes("/api");
 
-
   if (isLoginSignup) {
     return NextResponse.next();
   }
@@ -25,5 +24,5 @@ export async function middleware(NextRequest) {
 }
 
 export const config = {
-  matcher: '/',
+  matcher: ['/', '/profile'],
 };

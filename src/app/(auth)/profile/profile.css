@@ -1,0 +1,245 @@
+.profile{
+    width: 100vw;
+    height: 80vh;
+    background-image: url('./../../../../public/bg5.d60a95eb.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(3px);
+    position: relative;
+}
+
+.content{
+    width: 100vw;
+    height: 80vh;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}.profile_pic{
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: .5px solid #454545;
+}
+.button-upload{
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: none;
+    cursor: pointer;
+    border: .5px solid #454545;
+}
+.profile_pic img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+.profile_pic img:hover {
+    background: #000;
+}
+.img-upload{
+    position: relative;
+    cursor: pointer;
+}
+
+.img-upload:before{
+    content: "Upload";
+    font-size: 20px;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    text-align: center;
+    color: #63d3a6;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img-upload:hover:before{
+    opacity: 1;
+   }
+
+h1{
+    margin-top: 1vmax;
+    font-size: 1.6vmax;
+    color: white;
+}
+h2{
+    margin-top: 1vmax;
+    font-size: 1.2vmax;
+    color: white;
+}
+.row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5vmax;
+    color: white;
+    margin-top: 2vmax;
+}
+.col-1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.col-2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.about{
+    width: 100vw;
+    min-height: 10vh;
+  display: flex;
+  justify-content: center;
+}
+.about .bio {
+    width: 55%;
+    text-align: center;
+}
+.about .bio h4{
+    margin-top: 2vmax;
+    font-size: 2vmax;
+}
+.about .bio h6{
+    margin-top: 2vmax;
+    font-size: 1.2vmax;
+    color: #af9d9d;
+}
+.photo{
+    width: 100vw;
+    min-height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    margin-top: 4vmax;
+    margin-bottom: 4vmax;
+}
+.photo h4{
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+.postBox{
+    width: 80vw;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2vmax;
+    gap: 1vmax;
+}
+.image{
+    width: 15%;
+    height: 20vh;
+    cursor: pointer;
+}
+.image img{
+    object-fit: contain;
+    width: 100% !important;
+    height: 100%;
+}
+@media (max-width: 768px) {
+    .profile{
+        height: 50vh;
+    }
+    .content{
+        height: 50vh;
+    }
+}
+.blur{
+    filter: blur(5px);
+    position: fixed!important;
+}
+.popup{
+    width: 40vw;
+    min-height: 100vh;
+    position: fixed;
+    top: 0%;
+    background: #ffffff;
+    margin-left: 30%;
+}
+.poptop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .5vmax 2vmax  1vmax 1vmax;
+}
+.poptop h2{
+    color: #000;
+    font-size: 1.4vmax;
+}
+.close{
+border: none;
+padding: .5vmax 1vmax;
+border-radius: 5px;
+font-size: .9vmax;
+background: #2e89bd;
+color: white;
+cursor: pointer;
+}
+.follower{
+    height: 11vh;
+    background: #f0e1e1;
+    border-radius: 10px;
+    padding: 5px 1vmax;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+li{
+    list-style: none;
+}
+h4,h6{
+    text-align: center;
+}
+.img{
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.img img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+.remove, .unfollow{
+    border: none;
+    padding: .5vmax 1vmax;
+    border-radius: 5px;
+    font-size: 1vmax;
+    cursor: pointer;
+    background: #e7aaaa;
+}
+.edit{
+    background-color: transparent;
+    border: 1px solid white;
+    padding: .7vmax 1.2vmax;
+    color:  white;
+    margin-top: 2vmax;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.editProfile{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100vw;
+    min-height: 100vh;
+    background: #ffffff;
+}
