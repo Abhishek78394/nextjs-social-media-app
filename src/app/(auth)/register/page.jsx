@@ -11,12 +11,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { RegisterApi } from "@/store/api/authApi";
-import { RegisterUser } from "@/store/actions/authAction";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { receivedError, requestSent, responseReceived } from "@/store/utilsActions";
 import { Alert } from "@mui/material";
+import {  register, registerFailure, registerRequest, registerSuccess } from "@/redux/actions/authActions";
+import { registerApi } from "@/api/authApi";
 
 const defaultTheme = createTheme();
 
@@ -34,19 +34,18 @@ const Page = () => {
         username: data.get("username"),
         password: data.get("password")
       };
-      dispatch(requestSent());
 
-      const response = await RegisterApi(userDetails);
-      dispatch(RegisterUser(response));
+      dispatch(register.request());
 
-      dispatch(responseReceived());
+      const response = await registerApi(userDetails);
 
-      router.push("/");
+      dispatch(register.success(response));
+
+      router.push("/login");
     } catch (error) {
-      console.log("Login Page error::", error);
+      console.error("Login Page error::", error);
       setError(error.data.error);
-      dispatch(receivedError(error));
-      dispatch(responseReceived());
+      dispatch(register.failure(error.data.error));
     }
   };
 

@@ -13,7 +13,7 @@ export async function GET(req) {
       return NextResponse.json({ error: error.message }, { status: 401 });
     }
     
-      const pendingRequest =  await Follower.find({following_id: user._id, status: 'pending',}).populate('follower_id','-password')
+      const pendingRequest =  await Follower.find({me_id: user._id, status: 'pending',}).populate('follower','-password')
 
     return NextResponse.json(
       { message: "Pending Request fetched successfully",success:true, data: pendingRequest  },

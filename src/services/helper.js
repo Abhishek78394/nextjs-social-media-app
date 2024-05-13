@@ -1,4 +1,5 @@
 import Follower from "@/models/follower";
+import Following from "@/models/following";
 import { writeFile } from "fs/promises";
 import { cookies } from "next/headers";
 
@@ -42,10 +43,10 @@ const Helper = {
   },
   getFollowing: async (userId) => {
     try {
-      const followingList = await Follower.find({
-        follower_id: userId,
-        status: "accepted",
-      }).populate("following_id", "-password");
+      const followingList = await Following.find({
+        me_id: userId,
+        status: "accepted"
+      }).populate("following", "-password");
 
       return followingList;
     } catch (error) {
@@ -56,9 +57,9 @@ const Helper = {
   getFollower: async (userId) => {
     try {
       const followerList = await Follower.find({
-        following_id: userId,
-        status: "accepted",
-        }).populate("follower_id", "-password");
+        me_id: userId,
+        status: 'accepted',
+        }).populate("follower", "-password");
 
       return followerList;
     } catch (error) {
@@ -76,6 +77,7 @@ const Helper = {
   },
   setCookie: (key, value) => {
     const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+    // const oneDayInMilliseconds = 1000
     const expires = new Date(Date.now() + oneDayInMilliseconds);
   
     cookies().set(key, value, {

@@ -13,15 +13,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import { loginUser } from "@/store/actions/authAction";
-import { logInApi } from "@/store/api/authApi";
-import {
-  receivedError,
-  requestSent,
-  responseReceived,
-} from "@/store/utilsActions";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import { logInApi } from "@/api/authApi";
+import {
+  login
+} from "@/redux/actions/authActions";
 
 const defaultTheme = createTheme();
 
@@ -29,7 +26,6 @@ const Page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [error, setError] = React.useState();
-
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
@@ -38,19 +34,17 @@ const Page = () => {
         identifier: data.get("identifier"),
         password: data.get("password"),
       };
-      dispatch(requestSent());
+
+      dispatch(login.request());
 
       const response = await logInApi(userDetails);
-      dispatch(loginUser(response));
-
-      dispatch(responseReceived());
+      dispatch(login.success(response));
 
       router.push("/");
     } catch (error) {
       console.error("Login Page error::", error);
       setError(error.data.error);
-      dispatch(receivedError(error));
-      dispatch(responseReceived());
+      dispatch(login.failure(error.data.error));
     }
   };
 

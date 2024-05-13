@@ -1,6 +1,5 @@
-import { logOutUser } from "@/store/actions/authAction";
-import { LogOutApi } from "@/store/api/authApi";
-import { receivedError, requestSent, responseReceived } from "@/store/utilsActions";
+import { logOutApi } from "@/api/authApi";
+import { logout, logoutFailure, logoutRequest, logoutSuccess } from "@/redux/actions/authActions";
 import { Mail, Notifications, Pets } from "@mui/icons-material";
 import {
   AppBar,
@@ -54,18 +53,15 @@ const Navbar = () => {
 
   const logoutHandler = async () => {
     try {
-      dispatch(requestSent());
+      dispatch(logout.request());
 
-      const response = await LogOutApi();
-      dispatch(logOutUser(response));
-
-      dispatch(responseReceived());
+      await logOutApi();
+      dispatch(logout.success());
 
       router.push("/login");
     } catch (error) {
       console.error("Login Page error::", error);
-      dispatch(receivedError(error));
-      dispatch(responseReceived());
+      dispatch(logout.failure(error.message));
     }
   }
   return (

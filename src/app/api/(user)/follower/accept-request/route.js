@@ -2,6 +2,7 @@
     import { connect } from "@/dbConfig/dbConfig";
     import { NextResponse } from "next/server";
     import Follower from "@/models/follower";
+    import Following from "@/models/following";
     import Joi from 'joi'
 
     connect();
@@ -25,7 +26,12 @@
             }
             
         const updatedRequest = await Follower.findOneAndUpdate(
-            { follower_id: value.requestId, following_id: user._id, status: 'pending' }, 
+            { follower: value.requestId, me_id: user._id, status: 'pending' }, 
+            { $set: { status: 'accepted' } }, 
+            { new: true } 
+        );
+       await Following.findOneAndUpdate(
+            { me_id: value.requestId, following: user._id, status: 'pending' }, 
             { $set: { status: 'accepted' } }, 
             { new: true } 
         );

@@ -2,9 +2,18 @@ import AuthService from "@/services/authService";
 import { connect } from "@/dbConfig/dbConfig";
 import { NextResponse } from "next/server";
 import Follower from "@/models/follower";
+import Following from "@/models/following";
 import Joi from "joi";
 
 connect();
+
+async function handleErrors(error, status = 500) {
+  console.error("Error:", error);
+  return NextResponse.json(
+    { error: error.message || "Internal server error" },
+    { status }
+  );
+}
 
 export async function POST(req) {
   try {
@@ -12,51 +21,72 @@ export async function POST(req) {
       followeeId: Joi.string().required(),
     }).validate(await req.json());
 
-    if (error)
-      return NextResponse.json(
-        { error: error.details[0].message },
-        { status: 400 }
-      );
+    if (error) return handleErrors(error, 400);
 
     const { user, error: authError } = await AuthService.verifyToken();
+    if (authError) return handleErrors(authError, 401);
 
-    if (authError) {
-      return NextResponse.json({ error: authError.message }, { status: 401 });
-    }
-    const existingRequest = await Follower.findOne({
-      follower_id: user._id,
-      following_id: value.followeeId,
+    const existingRequest = await Following.findOne({
+      me_id: user._id,
+      following: value.followeeId,
     });
 
-    if (existingRequest && existingRequest.status === "pending") {
-      return NextResponse.json(
-        { error: "Following request already pending" },
-        { status: 409 }
-      );
-    } else if (existingRequest && existingRequest.status === "accepted") {
-      return NextResponse.json(
-        { error: "You are already following this user" },
-        { status: 409 }
-      );
+    if (existingRequest) {
+      if (existingRequest.status === "pending") {
+        return NextResponse.json(
+          { error: "Following request already pending" },
+          { status: 409 }
+        );
+      } else {
+        return NextResponse.json(
+          { error: "You are already following this user" },
+          { status: 409 }
+        );
+      }
     }
 
-    const follower = new Follower({
-      follower_id: user._id,
-      following_id: value.followeeId,
-      status: "pending",
-    });
+    const session = await Follower.startSession();
+    session.startTransaction();
 
-    await follower.save();
+    try {
+      const following = new Following({
+        following: user._id,
+        me_id: value.followeeId,
+        status: "pending",
+      });
 
-    return NextResponse.json(
-      { message: "Following request sent successfully", success: true },
-      { status: 200 }
-    );
+      const existingFollower = await Follower.findOne(
+        { follower: user._id, me_id: value.followeeId },
+      );
+
+      if (!existingFollower) {
+        const newFollower = new Follower({
+          follower: user._id,
+          me_id: value.followeeId,
+          status: "pending",
+        });
+        await newFollower.save({ session });
+      }else {
+        existingFollower.is_follow_back = true;
+        existingFollower.status = 'follow_back';
+        await existingFollower.save({ session });
+      }
+
+      await following.save({ session });
+
+      await session.commitTransaction();
+
+      return NextResponse.json(
+        { message: "Following request sent successfully", success: true },
+        { status: 200 }
+      );
+    } catch (error) {
+      await session.abortTransaction();
+      throw error;
+    } finally {
+      session.endSession();
+    }
   } catch (error) {
-    console.error("Error:", error);
-    return NextResponse.json(
-      { error: error.message || "Internal server error" },
-      { status: 500 }
-    );
+    return handleErrors(error);
   }
 }

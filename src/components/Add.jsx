@@ -92,7 +92,6 @@ function Add() {
               type="file"
               onChange={(event) => {
                 const file = event.target.files[0];
-                console.log(file);
               }}
             />
           </Stack>

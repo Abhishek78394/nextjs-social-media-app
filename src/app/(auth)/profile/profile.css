@@ -194,7 +194,7 @@ cursor: pointer;
 }
 .follower{
     height: 11vh;
-    background: #f0e1e1;
+    /* background: #f0e1e1; */
     border-radius: 10px;
     padding: 5px 1vmax;
     display: flex;
@@ -242,4 +242,21 @@ h4,h6{
     width: 100vw;
     min-height: 100vh;
     background: #ffffff;
+}
+.popup-content h2{
+    color: #000;
+    margin-bottom: 1vmax;
+    margin-left: 1vmax;
+}
+.follow button{
+color: blue;
+position: absolute;
+font-size: 11px;
+top: 0;
+left: 450%;
+width: 80px;
+cursor: pointer;
+}
+.name{
+    position: relative;
 }

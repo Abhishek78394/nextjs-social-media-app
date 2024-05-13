@@ -24,8 +24,8 @@ export async function DELETE(req) {
       return NextResponse.json({ error: authError.message }, { status: 401 });
     }
     const deletedCount = await Follower.deleteOne({
-      follower_id: value.followerId,
-      following_id: user._id,
+      follower: value.followerId,
+      me_id: user._id,
       status: "accepted",
     });
 

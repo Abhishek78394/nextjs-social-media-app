@@ -1,6 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import StoreProvider from "./StoreProvider";
+import Script from "next/script";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,8 +14,130 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html>
-      <body className={inter.className}>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+        />
+
+        <link
+          rel="stylesheet"
+          href="/plugins/fontawesome-free/css/all.min.css"
+        />
+
+        <link
+          rel="stylesheet"
+          href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+        />
+
+        <link
+          rel="stylesheet"
+          href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css"
+        />
+
+        <link
+          rel="stylesheet"
+          href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css"
+        />
+
+        <link rel="stylesheet" href="/plugins/jqvmap/jqvmap.min.css" />
+
+        <link rel="stylesheet" href="/dist/css/adminlte.min.css?v=3.2.0" />
+
+        <link
+          rel="stylesheet"
+          href="/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"
+        />
+
+        <link
+          rel="stylesheet"
+          href="/plugins/daterangepicker/daterangepicker.css"
+        />
+
+        <link
+          rel="stylesheet"
+          href="/plugins/summernote/summernote-bs4.min.css"
+        />
+        <Script
+          src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css"
+          strategy="beforeInteractive"
+          integrity="sha384-GJz5qWhJCxtz6Ech6iqO1uBT4ubYT/LlqVKcu1hqVTU50W9N5QiR2ifzYwtALwt0"
+          crossOrigin="anonymous"
+        />
+      </head>
+      <body className="hold-transition sidebar-mini layout-fixed">
         <StoreProvider>{children}</StoreProvider>
+        <Script
+          src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+          strategy="beforeInteractive"
+          integrity="sha256-jYUqpOUj8lIWv+tGBQaQDrYvCOuAG8CNuhc5PkaZj84="
+          crossOrigin="anonymous"
+        />
+        <Script
+          src="https://code.jquery.com/jquery-3.6.0.min.js"
+          strategy="beforeInteractive"
+          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+          crossOrigin="anonymous"
+        />
+        <Script
+          src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+          strategy="beforeInteractive"
+          integrity="sha256-jYUqpOUj8lIWv+tGBQaQDrYvCOuAG8CNuhc5PkaZj84="
+          crossOrigin="anonymous"
+        />
+        <Script>$.widget.bridge('uibutton', $.ui.button)</Script>
+
+        <Script
+          src="/plugins/bootstrap/js/bootstrap.bundle.min.js"
+          strategy="afterInteractive"
+        />
+         <Script
+          src="/plugins/jquery/jquery.min.js"
+          strategy="afterInteractive"
+        />
+        <Script
+          src="/plugins/chart.js/Chart.min.js"
+          strategy="afterInteractive"
+        />
+        <Script
+          src="./../../plugins/chart.js/Chart.min.js"
+          strategy="afterInteractive"
+        />
+
+        <Script
+          src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"
+          strategy="afterInteractive"
+        />
+        <Script src="/dist/js/demo.js" strategy="afterInteractive" />
+        <Script src="/dist/js/pages/dashboard.js" strategy="afterInteractive" />
+        <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <Script src="/plugins/chart.js/Chart.min.js"></Script>
+
+        <Script src="/plugins/sparklines/sparkline.js"></Script>
+
+        <Script src="/plugins/jqvmap/jquery.vmap.min.js"></Script>
+        <Script src="/plugins/jqvmap/maps/jquery.vmap.usa.js"></Script>
+
+        <Script src="/plugins/jquery-knob/jquery.knob.min.js"></Script>
+
+        <Script src="/plugins/moment/moment.min.js"></Script>
+        <Script src="/plugins/daterangepicker/daterangepicker.js"></Script>
+
+        <Script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></Script>
+
+        <Script src="/plugins/summernote/summernote-bs4.min.js"></Script>
+
+        <Script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></Script>
+
+        <Script src="/dist/js/adminlte.js?v=3.2.0"></Script>
+
+        <Script src="/dist/js/demo.js"></Script>
+
+        <Script src="/dist/js/pages/dashboard.js"></Script>
+        <Script src="/plugins/jquery/jquery.min.js"></Script>
+
+        <Script src="/plugins/jquery-ui/jquery-ui.min.js"></Script>
       </body>
     </html>
   );

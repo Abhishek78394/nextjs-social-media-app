@@ -1,65 +1,81 @@
-"use client"
+"use client";
 import React, { useEffect, useRef, useState } from "react";
 import "./profile.css";
-import { useDispatch } from "react-redux";
-import {
-  requestSent,
-  receivedError,
-  responseReceived,
-} from "@/store/utilsActions";
-import { FetchUserApi, UpdateProfilePicApi } from "@/store/api/authApi";
-import { fetchUser, UpdateProfilePic } from "@/store/actions/authAction";
+import { useDispatch, useSelector } from "react-redux";
 import ProfilePic from "./ProfilePic";
 import EditProfile from "./EditProfile";
+import { fetchProfile, updateProfilePic } from "@/redux/actions/profileActions";
+import { fetchProfileApi, updateProfilePicApi } from "@/api/profileApi";
+import {
+  fetchFollowerApi,
+  fetchFollowingApi,
+  fetchPendingRequestApi,
+  removeFollowerApi,
+} from "@/api/followApi";
+import {
+  fetchFollowers,
+  fetchFollowings,
+  fetchPendingRequests,
+  removeFollower,
+} from "@/redux/actions/followActions";
+import Popup from "./Popup";
 
 const Page = () => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState(null);
+  const profile = useSelector((state) => state.profile.profileData);
+  const { followers, following, pendingRequests } = useSelector(
+    (state) => state.follow
+  );
   const hiddenFileInput = useRef(null);
   const [showPopup, setShowPopup] = useState(null);
 
+  const fetchUserProfile = async () => {
+    try {
+      dispatch(fetchProfile.request());
+      const response = await fetchProfileApi();
+      dispatch(fetchProfile.success(response));
+    } catch (error) {
+      console.error("Profile Page error:++", error);
+      dispatch(fetchProfile.failure(error));
+    }
+  };
+  const fetchFollower = async () => {
+    try {
+      dispatch(fetchFollowers.request());
+      const response = await fetchFollowerApi();
+      dispatch(fetchFollowers.success(response));
+    } catch (error) {
+      console.error("Profile Page error:++", error);
+      dispatch(fetchFollowers.failure(error));
+    }
+  };
+  const fetchFollowing = async () => {
+    try {
+      dispatch(fetchFollowings.request());
+      const response = await fetchFollowingApi();
+      dispatch(fetchFollowings.success(response));
+    } catch (error) {
+      console.error("Profile Page error:++", error);
+      dispatch(fetchFollowings.failure(error));
+    }
+  };
+  const fetchPendingRequest = async () => {
+    try {
+      dispatch(fetchPendingRequests.request());
+      const response = await fetchPendingRequestApi();
+      dispatch(fetchPendingRequests.success(response));
+    } catch (error) {
+      console.error("Profile Page error:++", error);
+      dispatch(fetchPendingRequests.failure(error));
+    }
+  };
+  
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        dispatch(requestSent());
-        const response = await FetchUserApi();
-        dispatch(fetchUser(response));
-        setUser(response);
-      } catch (error) {
-        console.error("Profile Page error:", error);
-        dispatch(receivedError(error));
-      } finally {
-        dispatch(responseReceived());
-      }
-    };
     fetchUserProfile();
+    fetchFollower();
+    fetchFollowing();
+    fetchPendingRequest();
   }, []);
-
-  const handleChange = useRef(
-    debounce(async (event) => {
-      try {
-        event.preventDefault();
-        const fileUploaded = event.target.files[0];
-        dispatch(requestSent());
-
-        const formData = new FormData();
-        formData.append("image", fileUploaded);
-
-        const response = await UpdateProfilePicApi(formData);
-        dispatch(UpdateProfilePic(response));
-
-        setUser((prevUser) => ({
-          ...prevUser,
-          avatar: response.avatar,
-        }));
-      } catch (error) {
-        console.error("Profile Page error:", error);
-        dispatch(receivedError(error));
-      } finally {
-        dispatch(responseReceived());
-      }
-    }, 500)
-  ).current;
 
   const handleClick = () => {
     hiddenFileInput.current.click();
@@ -73,68 +89,95 @@ const Page = () => {
     setShowPopup(type);
   };
 
-  const handleUpdateUser = (updatedUser) => {
-    setUser((prevUser) => ({ ...prevUser, ...updatedUser }));
+  const handleInputChange = (event) => {
+    handleChange(event);
   };
+
+  const handleRemoveFollower = async (followerId) => {
+    try {
+      dispatch(removeFollower.request());
+      const response = await removeFollowerApi(followerId);
+      dispatch(removeFollower.success(response));
+    } catch (error) {
+      console.log("removeFollower failed:+", error);
+      dispatch(removeFollower.failure(error));
+    }
+  };
+
+  const handleUnfollow = (userId) => {};
+
+  const handleChange = useRef(
+    debounce(async (event, user) => {
+      try {
+        event.preventDefault();
+        const fileUploaded = event.target.files[0];
+        dispatch(updateProfilePic.request());
+
+        const formData = new FormData();
+        formData.append("image", fileUploaded);
+
+        const response = await updateProfilePicApi(formData);
+        dispatch(updateProfilePic.success(response));
+      } catch (error) {
+        console.error("Profile Page error:", error);
+        dispatch(updateProfilePic.failure(error));
+      }
+    }, 500)
+  ).current;
 
   return (
     <div>
       <div className={`profile ${showPopup ? "blur" : ""} `}></div>
       <div className={`content`}>
         <button className="button-upload" onClick={handleClick}>
-          {user && <ProfilePic type={"user"} img={user.avatar} />}
+          {profile && <ProfilePic type={"user"} img={profile.avatar} />}
         </button>
         <input
           type="file"
-          onChange={handleChange}
+          onChange={handleInputChange}
           name="image"
           ref={hiddenFileInput}
           style={{ display: "none" }}
         />
-        <h1>{user?.name}</h1>
-        <h2>{user?.username}</h2>
+        <h1>{profile?.name}</h1>
+        <h2>{profile?.username}</h2>
         <div className="row">
           <div onClick={() => handleOpenPopup("followers")} className="col-1">
-            <h1>{user?.followers?.length}</h1>
+            <h1>{followers.length}</h1>
             <h3>Follower</h3>
           </div>
           <div onClick={() => handleOpenPopup("followings")} className="col-2">
-            <h1>{user?.followings?.length}</h1>
+            <h1>{following.length}</h1>
             <h3>Following</h3>
           </div>
         </div>
-        <button onClick={() => handleOpenPopup("profile")} className="edit">Edit profile</button>
+        <button onClick={() => handleOpenPopup("profile")} className="edit">
+          Edit profile
+        </button>
       </div>
       <div className="about">
         <div className="bio">
           <h4>About me</h4>
-          <h6>{user?.bio}</h6>
+          <h6>{profile?.bio}</h6>
         </div>
       </div>
       <div className="photo">
         <h4>Photos</h4>
-        <div className="postBox">
-          {user?.posts?.map((post) => (
-            <div className="image" key={post._id}>
-              <ProfilePic type="post" img={post.image} />
-              <p>{post.caption}</p>
-            </div>
-          ))}
-        </div>
+        <div className="postBox"></div>
       </div>
       {showPopup && (
         <Popup
           type={showPopup}
-          data={showPopup === "followers" ? user.followers : user.followings}
+          fetchFollower={fetchFollower}
+          pendingRequests={showPopup === "followers" ? pendingRequests : null}
+          data={showPopup === "followers" ? followers : following}
           onClose={handleClosePopup}
+          handleRemoveFollower={handleRemoveFollower}
+          handleUnfollow={handleUnfollow}
         />
       )}
       {showPopup === "profile" && (
-        <EditProfile
-          user={user}
-          onClose={handleClosePopup}
-          onUpdateUser={handleUpdateUser}
-        />
+        <EditProfile user={profile} onClose={handleClosePopup} />
       )}
     </div>
   );
@@ -152,43 +195,3 @@ function debounce(func, delay) {
   };
 }
 
-const Popup = ({ type, data, onClose }) => {
-  const title = type === "followers" ? "Followers" : "Followings";
-  const handleAction = (itemId) => {
-    if (type === "followers") {
-      // handleRemoveFollower(itemId);
-    } else {
-      // handleUnfollow(itemId);
-    }
-  }
-  return (
-    <div className="popup">
-      <div className="popup-content">
-        <div className="poptop">
-          <button className="close" onClick={onClose}>
-            Close
-          </button>
-          <h2>{title}</h2>
-        </div>
-        <ul>
-          {data.map((item) => (
-            <div className="follower" key={item._id}>
-              <div className="img">
-                <ProfilePic type={"user"} img={item.avatar} />
-              </div>
-              <div className="name">
-                <h4>{item.name}</h4>
-                <h6>{item.username}</h6>
-              </div>
-              <div className="btn">
-                <button onClick={() => handleAction(item._id)} className={type === "followers" ? "remove" : "unfollow"}>
-                  {type === "followers" ? "remove" : "unfollow"}
-                </button>
-              </div>
-            </div>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-};

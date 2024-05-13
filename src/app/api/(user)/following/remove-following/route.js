@@ -23,18 +23,22 @@ export async function DELETE(req) {
     if (authError) {
       return NextResponse.json({ error: authError.message }, { status: 401 });
     }
-    const deletedCount = await Follower.deleteOne({
+    const followingUser = await Follower.findOne({
       follower_id: user._id,
       following_id: value.followeeId,
-      status: "accepted",
+      status: { $in: ['accepted', 'follow', 'followed_back_requested'] }
     });
 
-    if (deletedCount.deletedCount === 0) {
+    
+    if (!followingUser) {
       return NextResponse.json(
         { error: "User not found in your following list" },
         { status: 404 }
       );
     }
+
+    followingUser.status = 'accepted';
+    await followingUser.save();
 
     return NextResponse.json(
       { message: "User removed from your following list", success: true },
