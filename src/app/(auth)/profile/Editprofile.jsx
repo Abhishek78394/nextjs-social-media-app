@@ -21,7 +21,8 @@ const EditProfile = ({ user, onClose }) => {
       onClose();
     } catch (error) {
       console.error("Edit Profile Error:", error);
-      setError(error.message || "An error occurred while updating the profile.");
+      console.log(error.data.error ,  "sssss")
+      setError(error.data.error || "An error occurred while updating the profile.");
       dispatch(updateProfile.failure(error));
     }
   };

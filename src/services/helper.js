@@ -73,7 +73,7 @@ const Helper = {
       following_id: followingId,
       status: "accepted"
     });
-    return !!following;
+    return following;
   },
   setCookie: (key, value) => {
     const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
