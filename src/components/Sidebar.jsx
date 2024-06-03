@@ -34,7 +34,7 @@ import {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton component="a" href="/message">
+              <ListItemButton component="a" href="/chat">
                 <ListItemIcon>
                   <Message />
                 </ListItemIcon>

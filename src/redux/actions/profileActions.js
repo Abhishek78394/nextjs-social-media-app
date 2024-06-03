@@ -9,12 +9,8 @@ import {
   UPDATE_PROFILE_PICTURE_SUCCESS,
   UPDATE_PROFILE_PICTURE_FAILURE
 } from '../actionTypes';
+import { createAction } from './utils';
 
-const createAction = (actionType) => ({
-  request: () => ({ type: actionType.REQUEST }),
-  success: (payload) => ({ type: actionType.SUCCESS, payload }),
-  failure: (error) => ({ type: actionType.FAILURE, payload: error }),
-});
 
 // Action creators for fetch profile
 export const fetchProfile = createAction({

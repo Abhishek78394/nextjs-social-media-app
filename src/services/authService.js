@@ -1,7 +1,7 @@
 import * as jose from 'jose'
 const secretKey = process.env.JWT_SECRET;
 import { cookies } from "next/headers";
-
+import { NextResponse, NextRequest } from "next/server";
 const AuthService = {
   async issueToken(payload) {
     const secret = new TextEncoder().encode(secretKey)
@@ -17,15 +17,14 @@ const AuthService = {
   },
 
   async verifyToken() {
-    const {value} = cookies().get("token");
-
-    if (!value) {
-      return { error: "Access denied", status: 401 };
+    const token = cookies().get("token");
+    if (!token) {
+      return NextResponse.json({ error: "Access denied" }, { status: 401 });
     }
     
     try {
       const secret = new TextEncoder().encode(secretKey);
-      const decodedToken = await jose.jwtVerify(value, secret, {
+      const decodedToken = await jose.jwtVerify(token.value, secret, {
         issuer: "urn:example:issuer",
         audience: "urn:example:audience",
       });

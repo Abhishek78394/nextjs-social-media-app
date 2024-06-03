@@ -27,7 +27,6 @@ const Popup = ({
     try {
       dispatch(acceptRequest.request());
       const response = await acceptRequestApi(userId);
-      console.log(response, "resposed");
       dispatch(acceptRequest.success(response));
       fetchFollower();
     } catch (error) {

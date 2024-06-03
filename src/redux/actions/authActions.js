@@ -1,10 +1,5 @@
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE, FORGOT_PASSWORD_REQUEST, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE, REQUEST_SENT } from '../actionTypes';
-
-const createAction = (actionType) => ({
-  request: () => ({ type: actionType.REQUEST }),
-  success: (payload) => ({ type: actionType.SUCCESS, payload }),
-  failure: (error) => ({ type: actionType.FAILURE, payload: error }),
-});
+import { createAction } from './utils';
 
 // Action creators for login
 export const login = createAction({

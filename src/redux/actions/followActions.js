@@ -24,59 +24,59 @@ import {
   REMOVE_FOLLOWING_REQUEST,
   REMOVE_FOLLOWING_SUCCESS,
 } from "../actionTypes";
-import { createFollowerAction } from "./utils";
+import { createAction } from "./utils";
 
 // Action creators for fetching followers
-export const fetchFollowers = createFollowerAction({
+export const fetchFollowers = createAction({
   REQUEST: FOLLOWER_REQUEST,
   SUCCESS: FOLLOWER_SUCCESS,
   FAILURE: FOLLOWER_FAILURE,
 });
 
 // Action creators for fetching following
-export const fetchFollowings = createFollowerAction({
+export const fetchFollowings = createAction({
   REQUEST: FOLLOWING_REQUEST,
   SUCCESS: FOLLOWING_SUCCESS,
   FAILURE: FOLLOWING_FAILURE,
 });
 
 // Action creators for fetching pending requests
-export const fetchPendingRequests = createFollowerAction({
+export const fetchPendingRequests = createAction({
   REQUEST: PENDING_REQUESTS_REQUEST,
   SUCCESS: PENDING_REQUESTS_SUCCESS,
   FAILURE: PENDING_REQUESTS_FAILURE,
 });
 
 // Action creators for adding a follower
-export const addFollower = createFollowerAction({
+export const addFollower = createAction({
   REQUEST: ADD_FOLLOWER_REQUEST,
   SUCCESS: ADD_FOLLOWER_SUCCESS,
   FAILURE: ADD_FOLLOWER_FAILURE,
 });
 
 // Action creators for removing a follower
-export const removeFollower = createFollowerAction({
+export const removeFollower = createAction({
   REQUEST: REMOVE_FOLLOWER_REQUEST,
   SUCCESS: REMOVE_FOLLOWER_SUCCESS,
   FAILURE: REMOVE_FOLLOWER_FAILURE,
 });
 
 // Action creators for adding following
-export const addFollowing = createFollowerAction({
+export const addFollowing = createAction({
   REQUEST: ADD_FOLLOWING_REQUEST,
   SUCCESS: ADD_FOLLOWING_SUCCESS,
   FAILURE: ADD_FOLLOWING_FAILURE,
 });
 
 // Action creators for removing following
-export const removeFollowing = createFollowerAction({
+export const removeFollowing = createAction({
   REQUEST: REMOVE_FOLLOWING_REQUEST,
   SUCCESS: REMOVE_FOLLOWING_SUCCESS,
   FAILURE: REMOVE_FOLLOWING_FAILURE,
 });
 
 // Action creators for accepting pending request
-export const acceptRequest = createFollowerAction({
+export const acceptRequest = createAction({
   REQUEST: ACCEPT_REQUEST_REQUEST,
   SUCCESS: ACCEPT_REQUEST_SUCCESS,
   FAILURE: ACCEPT_REQUEST_FAILURE,

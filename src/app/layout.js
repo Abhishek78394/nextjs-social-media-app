@@ -3,7 +3,6 @@ import "./globals.css";
 import StoreProvider from "./StoreProvider";
 import Script from "next/script";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -91,7 +90,7 @@ export default function RootLayout({ children }) {
           src="/plugins/bootstrap/js/bootstrap.bundle.min.js"
           strategy="afterInteractive"
         />
-         <Script
+        <Script
           src="/plugins/jquery/jquery.min.js"
           strategy="afterInteractive"
         />
@@ -103,7 +102,7 @@ export default function RootLayout({ children }) {
           src="./../../plugins/chart.js/Chart.min.js"
           strategy="afterInteractive"
         />
-
+        <Script src="https://code.jquery.com/jquery-3.5.1.min.js" />
         <Script
           src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"
           strategy="afterInteractive"

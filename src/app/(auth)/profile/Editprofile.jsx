@@ -16,12 +16,11 @@ const EditProfile = ({ user, onClose }) => {
     try {
       dispatch(updateProfile.request());
       const response = await updateProfileApi(userDetails);
-      console.log(response, "resposting profile");
       dispatch(updateProfile.success(response));
       onClose();
     } catch (error) {
       console.error("Edit Profile Error:", error);
-      console.log(error.data.error ,  "sssss")
+      console.error("Error: ++ ", error);
       setError(error.data.error || "An error occurred while updating the profile.");
       dispatch(updateProfile.failure(error));
     }

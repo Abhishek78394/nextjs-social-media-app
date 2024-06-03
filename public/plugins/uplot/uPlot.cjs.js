@@ -43,7 +43,6 @@ function nonNullIdx(data, _i0, _i1, dir) {
 }
 
 function getMinMax(data, _i0, _i1, sorted) {
-//	console.log("getMinMax()");
 
 	let _min = inf;
 	let _max = -inf;
@@ -69,7 +68,6 @@ function getMinMax(data, _i0, _i1, sorted) {
 }
 
 function getMinMaxLog(data, _i0, _i1) {
-//	console.log("getMinMax()");
 
 	let _min = inf;
 	let _max = -inf;
@@ -1009,16 +1007,6 @@ const [ timeIncrsS,  _timeAxisStampsS,  timeAxisSplitsS  ] = genTimeStuffs(1e-3)
 // base 2
 genIncrs(2, -53, 53, [1]);
 
-/*
-console.log({
-	decIncrs,
-	oneIncrs,
-	wholeIncrs,
-	numIncrs,
-	timeIncrs,
-	fixedDec,
-});
-*/
 
 function timeAxisStamps(stampCfg, fmtDate) {
 	return stampCfg.map(s => s.map((v, i) =>

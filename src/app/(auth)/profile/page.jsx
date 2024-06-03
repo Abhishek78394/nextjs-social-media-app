@@ -29,7 +29,7 @@ const Page = () => {
   const hiddenFileInput = useRef(null);
   const [showPopup, setShowPopup] = useState(null);
 
-  const fetchUserProfile = async () => {
+ const fetchUserProfile = async () => {
     try {
       dispatch(fetchProfile.request());
       const response = await fetchProfileApi();
@@ -99,7 +99,7 @@ const Page = () => {
       const response = await removeFollowerApi(followerId);
       dispatch(removeFollower.success(response));
     } catch (error) {
-      console.log("removeFollower failed:+", error);
+      console.error("removeFollower failed:+", error);
       dispatch(removeFollower.failure(error));
     }
   };
